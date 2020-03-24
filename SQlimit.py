@@ -135,7 +135,7 @@ class SQlim(object):
         """
 
         if not self.Es[0] <= Eg <= self.Es[-1]:
-            print "invalid bandgap \nvalid range: 0.32 to 4.4"
+            print ("invalid bandgap \nvalid range: 0.32 to 4.4")
             return
         V = np.arange(Vmin, Eg, Vstep)
         paras = self.get_paras(Eg, toPrint=False)
@@ -175,7 +175,7 @@ class SQlim(object):
         '''
 
         if not self.Es[0] <= Eg <= self.Es[-1]:
-            print "invalid bandgap \nvalid range: 0.32 to 4.4"
+            print ("invalid bandgap \nvalid range: 0.32 to 4.4")
             return
         para = {}
         # could change these to binary search
@@ -187,12 +187,12 @@ class SQlim(object):
 
         if toPrint:  # won't return anything; print in console instead
             print
-            print "Bandgap: {0:.3f} eV \n".format(Eg)
-            print "J0 = {0:.3g} mA/cm^2".format(para["J0"])
-            print "Voc = {0:.4g} \t V".format(para["Voc"])
-            print "Jsc = {0:.4g} \t mA/cm^2".format(para["Jsc"])
-            print "FF  = {0:.2f} \t %".format(para["FF"])
-            print "PCE = {0:.3f} \t %".format(para["PCE"])
+            print ("Bandgap: {0:.3f} eV \n".format(Eg))
+            print ("J0 = {0:.3g} mA/cm^2".format(para["J0"]))
+            print ("Voc = {0:.4g} \t V".format(para["Voc"]))
+            print ("Jsc = {0:.4g} \t mA/cm^2".format(para["Jsc"]))
+            print ("FF  = {0:.2f} \t %".format(para["FF"]))
+            print ("PCE = {0:.3f} \t %".format(para["PCE"]))
             return
 
         return para
@@ -220,8 +220,8 @@ class SQlim(object):
         """
 
         if para not in self.paras:
-            print "Invalid input! Valid inputs are:"
-            print '"Voc", "Jsc", "FF", "PCE", and "J0"'
+            print ("Invalid input! Valid inputs are:")
+            print ('"Voc", "Jsc", "FF", "PCE", and "J0"')
             return
         yunits = {"Voc": "(V)", "Jsc": "(mA/$\mathregular{cm^2}$)",
                   "FF": "(%)", "J0": "(mA/$\mathregular{cm^2}$)",
@@ -262,7 +262,7 @@ class SQlim(object):
         plt.show()
         return
 
-    def E_loss(self, Eg, xmin=300, xmax=2500, savefig=False):
+    def E_loss (self, Eg, xmin=300, xmax=2500, savefig=False):
         """
         input bandgap Eg, plot the energy loss and the available energy
         Eg :  bandgap (unit: eV)
@@ -273,7 +273,7 @@ class SQlim(object):
         """
 
         if Eg > 4.2 or Eg < 0.32:
-            print "invalid bandgap \nvalid range: 0.32 to 4.2"
+            print ("invalid bandgap \nvalid range: 0.32 to 4.2")
             return None
 
         xmax = max(xmax, 1240.0 / Eg)
@@ -326,7 +326,7 @@ class SQlim(object):
 
         ax.plot([Eg], [0])
         ax.legend(legends, labels, frameon=False, title=legendtitle,
-                  fontsize=14, loc="upper right").draggable()
+                  fontsize=14, loc="upper right").set_draggable(True)
         ax.get_legend().get_title().set_fontsize(14)
 
         ax.set_xlim(xmin, xmax)
@@ -379,7 +379,7 @@ class SQlim(object):
             numEg, Egs = 1, [Egs]
         EgMax, Egmin = max(Egs), min(Egs)
         if EgMax > 4.2 or Egmin < 0.32:
-            print "invalid bandgap \nvalid range: 0.32 to 4.2 eV"
+            print ("invalid bandgap \nvalid range: 0.32 to 4.2 eV")
             return None
         xmax = max(xmax, 1240.0 / Egmin)
         xmin = min(xmin, 1240.0 / EgMax)
@@ -444,14 +444,14 @@ class SQlim(object):
                           for i in range(numEg - 1, -1, -1)]
 
             ax.legend(legends, labels, frameon=False, loc="upper right",
-                      fontsize=14).draggable()
+                      fontsize=14).set_draggable(True)
 
         if numEg != 1 and legend_totE:
             totE = np.nansum(PCEsubcell)  # small slice would have nan PCE
             legend_title = "Total = {0:.1f} %".format(totE)
             if not ax.get_legend():
                 ax.legend("", "", frameon=False, loc="upper right",
-                          title=legend_title, fontsize=14).draggable()
+                          title=legend_title, fontsize=14).set_draggable(True)
             else:
                 ax.get_legend().set_title(legend_title)
             ax.get_legend().get_title().set_fontsize(14)
@@ -473,7 +473,7 @@ class SQlim(object):
         plt.figure()
         parameters = {"PCE", "Jsc", "FF", "Voc", "J0"}
         if attr not in parameters:
-            print "Invalid attribute"
+            print ("Invalid attribute")
             return
         SQs = [SQlim(T=temp) for temp in sorted(T)]
         for SQ in SQs:
@@ -490,7 +490,7 @@ class SQlim(object):
         plt.figure()
         parameters = {"PCE", "Jsc", "FF", "Voc", "J0"}
         if attr not in parameters:
-            print "Invalid attribute"
+            print ("Invalid attribute")
             return
         SQs = [SQlim(EQE_EL=EQE) for EQE in sorted(EQE_EL, reverse=True)]
         for SQ in SQs:
@@ -509,7 +509,7 @@ class SQlim(object):
         plt.figure()
         parameters = {"PCE", "Jsc", "FF", "Voc", "J0"}
         if attr not in parameters:
-            print "Invalid attribute"
+            print ("Invalid attribute")
             return
         SQs = [SQlim(intensity=sun) for sun in sorted(Suns, reverse=True)]
         for SQ in SQs:
@@ -575,9 +575,17 @@ if __name__ == "__main__":
     SQ = SQlim()
     SQ.plot()
     SQ.plotall()
-    SQ.E_loss(1.337)
-    SQ.available_E(1.6)
+    SQ.E_loss(1.8)
+    SQ.get_paras(Eg=1.8)
+    SQ.simulate_JV(Eg=1.8, plot=True)
+    SQ.available_E(1.8)
     plt.show()
+
+    plt.pause(100)
+   
+    """
+    plt.pause让图片窗口显示100s
+    """
 
     """
     # plot Voc, Jsc, FF, PCE
@@ -597,6 +605,9 @@ if __name__ == "__main__":
 
     ### calculate and plot JV curve
     SQ.simulate_JV(1.3, plot=True)
+    
+   
+    
     """
 
 
